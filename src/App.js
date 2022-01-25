@@ -6,7 +6,7 @@ import ProductList from "./components/ProductList";
 import React,{useState} from "react";
 
 function App() {
-  const productList = [
+  const products = [
     {
       price: 99999,
       name: "IPhone 10S Max",
@@ -17,13 +17,21 @@ function App() {
       name: "Redmi Note 10S Max",
       quantity: 0,
     }
-  ]
+  ];
 
-  let [List, setProductList] = useState(productList)
+  let [productList, setProductList] = useState(products);
 
-  const incrementQuanity = (index) =>{
-    let newProductList = [...List]
+  const incrementQuantity = (index) =>{
+    let newProductList = [...productList];
     newProductList[index].quantity++;
+    setProductList(newProductList);
+  }
+
+  const decrementQuantity = (index) =>{
+    let newProductList = [...productList];
+    if(newProductList[index].quantity>0)
+      newProductList[index].quantity--;
+    
     setProductList(newProductList);
   }
 
@@ -31,7 +39,9 @@ function App() {
     <>
       <NavBar />
       <main className="container mt-5">
-        <ProductList productList={productList} incrementQuanity={incrementQuanity}/>
+        <ProductList productList={productList}
+          incrementQuantity={incrementQuantity}
+          decrementQuantity={decrementQuantity} />
       </main>
       {/* <Footer/> */}
     </>
