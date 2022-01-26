@@ -17,7 +17,7 @@ export default function Product(props) {
                 </div>
             </div>
             <div className="col-3">
-                {props.product.quantity*props.product.price}
+                ₹{props.product.quantity*props.product.price}
             </div>
         </div>
     );

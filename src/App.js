@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import NavBar from "./components/Navbar";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
 import React,{useState} from "react";
 
@@ -20,18 +20,34 @@ function App() {
   ];
 
   let [productList, setProductList] = useState(products);
+  let [totalAmount, setTotalAmount] = useState(0);
 
   const incrementQuantity = (index) =>{
     let newProductList = [...productList];
+    let newTotalAmount = totalAmount;
     newProductList[index].quantity++;
+    newTotalAmount += newProductList[index].price;
+    setTotalAmount(newTotalAmount);
     setProductList(newProductList);
   }
 
   const decrementQuantity = (index) =>{
     let newProductList = [...productList];
-    if(newProductList[index].quantity>0)
+    let newTotalAmount = totalAmount;
+    if (newProductList[index].quantity > 0) {
       newProductList[index].quantity--;
-    
+      newTotalAmount -= newProductList[index].price;
+    }
+    setTotalAmount(newTotalAmount);
+    setProductList(newProductList);
+  }
+
+  const resetQuantity = () => {
+    let newProductList = [...productList];
+
+    newProductList.map((product) => {product.quantity = 0});
+
+    setTotalAmount(0);
     setProductList(newProductList);
   }
 
@@ -43,7 +59,7 @@ function App() {
           incrementQuantity={incrementQuantity}
           decrementQuantity={decrementQuantity} />
       </main>
-      {/* <Footer/> */}
+      <Footer totalAmount={totalAmount} resetQuantity={resetQuantity}/>
     </>
   );
 }
