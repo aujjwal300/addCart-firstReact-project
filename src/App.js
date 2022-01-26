@@ -51,13 +51,25 @@ function App() {
     setProductList(newProductList);
   }
 
+  const removeItem = (index) => {
+    let newProductList = [...productList];
+    let newTotalAmount = totalAmount;
+
+    newTotalAmount -= newProductList[index].price*newProductList[index].quantity;
+    newProductList.splice(index, 1);
+
+    setTotalAmount(newTotalAmount);
+    setProductList(newProductList);
+  }
+
   return (
     <>
       <NavBar />
       <main className="container mt-5">
         <ProductList productList={productList}
           incrementQuantity={incrementQuantity}
-          decrementQuantity={decrementQuantity} />
+          decrementQuantity={decrementQuantity}
+          removeItem={removeItem}/>
       </main>
       <Footer totalAmount={totalAmount} resetQuantity={resetQuantity}/>
     </>
